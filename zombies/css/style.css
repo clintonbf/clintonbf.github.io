@@ -1,5 +1,5 @@
 body {
-    border: 5px solid magenta;
+    /*border: 5px solid magenta;*/
     background-image: url("../images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -7,7 +7,7 @@ body {
 }
 
 #header {
-    border: 5px solid blue;
+    /*border: 5px solid blue;*/
     overflow: hidden;
 }
 
@@ -17,19 +17,22 @@ body {
 }
 
 #playingfield {
-    resize: auto;
-    overflow: hidden;
+    
+}
+
+table {
+    /*border: 5px solid cyan;*/
 }
 
 #footer {
-    border: 5px solid green;
-    overflow: hidden;
-    /*position: fixed;*/ /* position and bottom will move it to the bottom left, but not to the center. Unsure about re-size
-    /*bottom: 50px;*/
+    /*border: 5px solid green;*/
+    
+    position: fixed;
+    top: 90%;
+    left: 45%;
 }
 
 #reset_table {
     margin-left: auto;
     margin-right: auto;
-    /*margin-top: 475px;*/ /*This will function, but is non-responsive to screen size changes
 }
