@@ -1,0 +1,21 @@
+body {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+}
+
+#scorediv {
+    border-style: solid;
+}
+
+#scoretable {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#footer {
+    text-align: center;
+    vertical-align: baseline;
+    border-style: solid;
+}
