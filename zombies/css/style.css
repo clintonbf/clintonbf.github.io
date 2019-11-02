@@ -1,21 +1,35 @@
 body {
+    border: 5px solid magenta;
     background-image: url("../images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    text-align: center;
+    text-align: center;    
 }
 
-#scorediv {
-    border-style: solid;
+#header {
+    border: 5px solid blue;
+    overflow: hidden;
 }
 
-#scoretable {
+#score_table {
     margin-left: auto;
     margin-right: auto;
 }
 
+#playingfield {
+    resize: auto;
+    overflow: hidden;
+}
+
 #footer {
-    text-align: center;
-    vertical-align: baseline;
-    border-style: solid;
+    border: 5px solid green;
+    overflow: hidden;
+    /*position: fixed;*/ /* position and bottom will move it to the bottom left, but not to the center. Unsure about re-size
+    /*bottom: 50px;*/
+}
+
+#reset_table {
+    margin-left: auto;
+    margin-right: auto;
+    /*margin-top: 475px;*/ /*This will function, but is non-responsive to screen size changes
 }
