@@ -1,5 +1,4 @@
 body {
-    /*border: 5px solid magenta;*/
     background-image: url("../images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -7,7 +6,6 @@ body {
 }
 
 #header {
-    /*border: 5px solid blue;*/
     overflow: hidden;
 }
 
@@ -21,12 +19,9 @@ body {
 }
 
 table {
-    /*border: 5px solid cyan;*/
 }
 
 #footer {
-    /*border: 5px solid green;*/
-    
     position: fixed;
     top: 90%;
     left: 45%;

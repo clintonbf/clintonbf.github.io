@@ -30,7 +30,7 @@
 
         <script>
             //This function will load the zombie image for playing
-            function load_zombie() {
+            function load_zombie(is_centerered) {
                 let screen_width = window.innerWidth;
                 let screen_height = window.innerHeight;
 
@@ -41,23 +41,27 @@
                 document.getElementById("zombie").width = img_width;
                 document.getElementById("zombie").height = img_height;
 
-                //format positioning
-                document.getElementById("zombie").style.position = "absolute";
-                document.getElementById("zombie").style.left = parseInt((screen_width / 2) - (img_width / 2)) + "px";
-                document.getElementById("zombie").style.top = parseInt((screen_height / 2) - (img_height / 2)) + "px";
+                if (is_centerered === true) {
+                    //format positioning
+                    document.getElementById("zombie").style.position = "absolute";
+                    /*Because positioning is based upon the top left corner, we need to offset the image
+                    by half of its width to the left and half of it's height up in order to center the center of the image*/
+                    document.getElementById("zombie").style.left = parseInt((screen_width / 2) - (img_width / 2)) + "px";
+                    document.getElementById("zombie").style.top = parseInt((screen_height / 2) - (img_height / 2)) + "px";
+                } 
             }
 
-            load_zombie();
+            load_zombie(true);
         </script>
 
         <script>
-            document.getElementById("reset").onclick = reset;
-
             // Re-initialize everything
             function reset() {
                 document.getElementById("score").innerHTML = 0;
-                load_zombie();
+                load_zombie(true);
             }
+
+            document.getElementById("reset").onclick = reset;
             
             // Calculate the new coordinate
             function get_new_coordinate(upper_bound, offset) {
@@ -66,6 +70,7 @@
                 // num = lower_bound + [random * (upper_bound - lower_bound)]
                 new_pos = Math.floor(0 + Math.random() * upper_bound - 0);
 
+                //This will keep the zombie from being cutoff (ie. exceed limit of screen)
                 if (new_pos > (upper_bound - offset)) {
                     new_pos = upper_bound - offset;
                 }
@@ -88,7 +93,7 @@
                 document.getElementById("zombie").style.top = y_repos + "px";
             }
 
-            // Change image when zombie is smucked
+            // Change image and play a sound when zombie is smucked
             function kaboom() {
                 sound = new Audio();
                 sound.src = "src/squish.m4a";
@@ -96,11 +101,12 @@
                 
                 sound.play();
 
+                //increment the score
                 let previous_score = parseInt(document.getElementById("score").innerHTML.valueOf());
-
                 document.getElementById("score").innerHTML = previous_score + 100;
                 
-                setTimeout(function nada(){document.getElementById("zombie").src = "images/zombie_moth.png";}, 500);                
+                //ressurect the zombie
+                setTimeout(function ressurect(){load_zombie(false);}, 500);
             }
 
             document.getElementById("zombie").onclick = kaboom;
