@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zombie slaying!</title>
+
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+
+    <body>
+        <div id="header">
+            <table id="score_table">
+                <tr>
+                    <td>Score:</td>
+                    <td id="score">0</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="playing_field">
+            <img id="zombie">
+        </div>
+
+        <div id="footer">
+            <table id="reset_table">
+                <tr>
+                    <td><button id="reset">Reset game</button></td>
+                </tr>
+            </table>   
+        </div>
+
+        <script>
+            //This function will load the zombie image for playing
+            function load_zombie(is_centerered) {
+                let screen_width = window.innerWidth;
+                let screen_height = window.innerHeight;
+
+                let img_width = 200;
+                let img_height = 250;
+
+                document.getElementById("zombie").src = "images/zombie_moth.png";
+                document.getElementById("zombie").width = img_width;
+                document.getElementById("zombie").height = img_height;
+
+                if (is_centerered === true) {
+                    //format positioning
+                    document.getElementById("zombie").style.position = "absolute";
+                    /*Because positioning is based upon the top left corner, we need to offset the image
+                    by half of its width to the left and half of it's height up in order to center the center of the image*/
+                    document.getElementById("zombie").style.left = parseInt((screen_width / 2) - (img_width / 2)) + "px";
+                    document.getElementById("zombie").style.top = parseInt((screen_height / 2) - (img_height / 2)) + "px";
+                } 
+            }
+
+            load_zombie(true);
+        </script>
+
+        <script>
+            // Re-initialize everything
+            function reset() {
+                document.getElementById("score").innerHTML = 0;
+                load_zombie(true);
+            }
+
+            document.getElementById("reset").onclick = reset;
+            
+            // Calculate the new coordinate
+            function get_new_coordinate(upper_bound, offset) {
+                let new_pos = undefined;
+
+                // num = lower_bound + [random * (upper_bound - lower_bound)]
+                new_pos = Math.floor(0 + Math.random() * upper_bound - 0);
+
+                //This will keep the zombie from being cutoff (ie. exceed limit of screen)
+                if (new_pos > (upper_bound - offset)) {
+                    new_pos = upper_bound - offset;
+                }
+
+                return new_pos;
+            }
+
+            // Move the zombie to a different location
+            function move_zombie() {
+                let screen_width = window.innerWidth;
+                let screen_height = window.innerHeight;
+                let img_width = 200;
+                let img_height = 250;
+
+                
+                let x_repos = get_new_coordinate(screen_width, img_width);
+                let y_repos = get_new_coordinate(screen_height, img_height);
+
+                document.getElementById("zombie").style.left = x_repos + "px";
+                document.getElementById("zombie").style.top = y_repos + "px";
+            }
+
+            // Change image and play a sound when zombie is smucked
+            function kaboom() {
+                sound = new Audio();
+                sound.src = "src/squish.m4a";
+                document.getElementById("zombie").src = "images/boom.png";
+                
+                sound.play();
+
+                //increment the score
+                let previous_score = parseInt(document.getElementById("score").innerHTML.valueOf());
+                document.getElementById("score").innerHTML = previous_score + 1;
+                
+                //ressurect the zombie
+                setTimeout(function ressurect(){load_zombie(false);}, 500);
+            }
+
+            document.getElementById("zombie").onclick = kaboom;
+            setInterval(move_zombie, 2000);
+        </script>
+    </body>
+</html>
