@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 8 - part B</title>
+</head>
+<body>
+    <script>
+        function Recipe (title, servings, ingredients) {
+            this.title = title;
+            this.servings = servings;
+            this.ingredients = ingredients;
+
+            print: {
+                document.write("<p><strong>Title:</strong> " + this.title + "</p>");
+                document.write("<p><strong>Serves:</strong> " + this.servings + "</p>");
+
+                document.write("")
+                for (let i = 0; i < ingredients.length; i++) {
+                    document.write("<ul>");
+                    document.write("<li>" + ingredients[i] + "</li>");
+                    document.write("</ul");
+                }
+            }
+        }
+    </script>
+
+    <!--
+    <script>
+        my_dinner = new Recipe("Bolognese", "1", ['ground beef', 'San Marzano tomatoes', 'onions', 'rosemary', 'pancetta']);
+        my_dinner.print();
+    </script> -->
+
+    <!-- Output OATMEAL -->
+    <script>
+        my_breakfast = new Recipe("Oatmeal", "1", ['steel cut oats', 'brown sugar', 'cinnamon', 'walnuts']);
+        my_breakfast.print();
+    </script>
+
+    <!-- Output BOLOGNESE -->
+    <script>
+        my_dinner = new Recipe("Bolognese", "1", ['ground beef', 'San Marzano tomatoes', 'onions', 'rosemary', 'pancetta']);
+        my_dinner.print();
+    </script>
+</body>
+</html>

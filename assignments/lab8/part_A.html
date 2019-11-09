@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 8 - part A</title>
+</head>
+
+<body>
+    <script>
+        function create_buttons(num) {
+            let button_array = [];
+            let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+            for (let i = 0; i < num; i++) {
+                let btn = document.createElement('button');
+                btn.name = letters[i];
+                btn.innerHTML = btn.name;
+                btn.onclick = function () {
+                    console.log("Button " + btn.name + " was clicked");
+                    };
+
+                button_array.push(btn);
+               }
+
+            return button_array;
+        }
+
+        function display_buttons() {
+            let my_buttons = create_buttons(26);
+
+            for (let i = 0; i < my_buttons.length; i++) {
+                document.body.appendChild(my_buttons[i]);
+            }
+        }
+
+        display_buttons();
+    </script>
+
+</body>
+</html>
