@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--suppress SpellCheckingInspection -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 09, part B</title>
+
+    <style>
+        body {
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+    </style>
+
+    <script>
+        let box_arr = [];
+        let next_to_click = 0;
+        let box_height = 80; // This is in px not em
+        let box_width = 160; // This is in px not em
+        let timeout = 3000;
+
+        // Get a random colour
+        function get_random_colour() {
+            let colour_array = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'lightblue',
+                'cyan', 'lightgreen', 'magenta', 'lightred'];
+
+            let index = Math.floor(Math.random() * colour_array.length);
+
+            return colour_array[index];
+        }
+
+        // Get a random number
+        function get_random_number(lower, upper, offset) {
+            // num = lower_bound + [random * (upper_bound - lower_bound)]
+            return Math.floor(lower + (Math.random() * (upper - lower)));
+        }
+
+        // button object constructor
+        function Box (top, left, colour, order) {
+            this.btn = document.createElement('button');
+            this.btn.style.width = "10em";
+            this.btn.style.height = "5em";
+            this.btn.style.position = 'absolute';
+            this.btn.style.top = top + "px";
+            this.btn.style.left = left + "px";
+            this.btn.style.background = colour;
+            this.btn.value = "Hello world";
+            this.btn.color = colour;
+            this.btn.order = order;
+
+            this.btn.onclick = function() {
+                if (this.order === next_to_click) {
+                    next_to_click++;
+                    console.log("Right! Click " + next_to_click + " next");
+                    if (next_to_click === box_arr.length) {
+                        document.getElementById("wrong_order").innerHTML = "Excellent memory!";
+                    }
+                    else {
+                        document.getElementById("wrong_order").innerHTML = "Great work! " + (box_arr.length - next_to_click) + " left to go";
+                    }
+                }
+                else {
+                    document.getElementById("wrong_order").innerHTML = "WRONG!";
+                    console.log("WRONG!");
+                };
+            };
+        }
+
+        //Ensure input is valid
+        function validate_number(num) {
+            if (parseInt(num)) {
+                if (num < 5 || num > 100) {
+                    return false;
+                }
+                return parseInt(num);
+            }
+            else {
+                return false;
+            }
+        }
+
+        /*Get a random coordinate to move the box to a new position
+         A full move requires a call twice (once for left, one for top)*/
+        function get_random_coordinate(offset, type) {
+            let upper = null;
+
+            if (type === "left") {
+                upper = window.innerWidth;
+            }
+            else if (type === "top"){
+                upper = window.innerHeight;
+            }
+
+            // num = lower_bound + [random * (upper_bound - lower_bound)]
+            let coordinate = 0 + (Math.random() * (upper - 0)) - offset;
+            if (coordinate < 0) {
+                coordinate = 0;
+            }
+
+            return Math.floor(coordinate);
+        }
+
+        // Move every box
+        function move_all_boxes(){
+            // Code to prevent overlap [1/3]
+            // let coord_arr = []; //an array of all of the x-coordinates that contain boxes
+
+            for (let i = 0; i < box_arr.length; i++) {
+                let tp = get_random_coordinate(box_height, 'top');
+                let lft = get_random_coordinate(box_width, 'left');
+
+                // Code to prevent overlap [2/3]
+               // while (coord_arr.includes(lft)) {
+               //      lft = get_random_coordinate(box_width, 'left');
+               //  }
+
+                box_arr[i].btn.style.top = tp + "px";
+                box_arr[i].btn.style.left = lft + "px";
+
+                // Code to prevent overlap [3/3]
+                // for (let j = (lft - box_width); j <= (lft + (box_width * 2)); j++) {
+                //     coord_arr.push(j); //It may not be possible to prevent an x-overlap. An infinite loop may be forming
+                // }
+            }
+
+            console.log("======Boxes have MOVED======");
+        }
+
+        // Create the boxes and then move them
+        function start_madness() {
+            let num_boxes = document.getElementById("box_num").value;
+
+            if (validate_number(num_boxes)) {
+                let tp_offset = 0;
+                let lft_offset = 0;
+
+                for (let i = 0; i < num_boxes; i++) {
+                    //Code to stack boxes if they go past the screen size (1/2)
+                    /*let tp = box_height + tp_offset;
+                    let lft = box_width + lft_offset;*/
+                    let tp = box_height + tp_offset;
+                    let lft = box_width + (box_width * i);
+
+                    //Code to stack boxes if they go past the screen size (2/2)
+                    /* if (lft + (2 * box_width) > innerWidth) { // if the box is going to be placed outside of the viewport
+                         lft_offset = 0;
+                         tp_offset = box_height + 5;
+                     }
+                     else {
+                         lft_offset += box_width;
+                    // }*/
+
+                    box_arr.push(new Box(tp, lft, get_random_colour(), i));
+                    document.body.appendChild(box_arr[i].btn);
+                }
+                   setTimeout(move_all_boxes, timeout);
+
+            }
+            else {
+                document.getElementById('box_num').style.color = 'red';
+                document.getElementById('box_num').value = 'Invalid input';
+                setTimeout(function(){
+                        document.getElementById('box_num').style.color = 'black';
+                        document.getElementById('box_num').value = 'Try again';}
+                    , 2000);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<p id="input_getter">How many boxes do you want (5 - 100)?<input id="box_num" type="text"></p>
+<input type="button" id="go_btn" value="Go!">
+<p id="wrong_order"></p>
+
+<script>
+    //Event handler for Go button
+    document.getElementById("go_btn").onclick = start_madness;
+</script>
+</body>
+</html>

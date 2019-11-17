@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 09, part A</title>
+
+    <script>
+        let box_arr = [];
+        let box_height = 80; // This is in px not em
+        let box_width = 160; // This is in px not em
+
+
+        function get_random_colour() {
+            let colour_array = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+
+            let index = Math.floor(Math.random() * colour_array.length);
+
+            return colour_array[index];
+        }
+
+        function get_random_number(lower, upper) {
+            // num = lower_bound + [random * (upper_bound - lower_bound)]
+            return Math.floor(lower + (Math.random() * (upper - lower)));
+        }
+
+        // button object constructor
+        function Box (top, left, colour) {
+            this.btn = document.createElement('button');
+                this.btn.style.width = "10em";
+                this.btn.style.height = "5em";
+                this.btn.style.position = 'absolute';
+                this.btn.style.top = top + "px";
+                this.btn.style.left = left + "px";
+                this.btn.style.background = colour;
+                this.btn.value = "Hello world";
+                this.color = colour;
+        }
+
+        //Ensure input is valid
+        function validate_number(num) {
+            if (parseInt(num)) {
+                if (num < 5 || num > 100) {
+                    return false;
+                }
+                return parseInt(num);
+            }
+            else {
+                return false;
+            }
+        }
+
+        /*Get a random coordinate to move the box to a new position
+         A full move requires a call twice (once for left, one for top)*/
+        function get_random_coordinate(offset, type) {
+            let upper = null;
+
+            if (type === "left") {
+                upper = window.innerWidth;
+            }
+            else if (type === "top"){
+                upper = window.innerHeight;
+            }
+
+            // num = lower_bound + [random * (upper_bound - lower_bound)]
+            let coordinate = 0 + (Math.random() * (upper - 0)) - offset;
+            if (coordinate < 0) {
+                coordinate = 0;
+            }
+
+            return Math.floor(coordinate);
+        }
+
+        // Move every box
+        function move_all_boxes(){
+            for (let i = 0; i < box_arr.length; i++) {
+                let tp = get_random_coordinate(box_height, 'top');
+                let lft = get_random_coordinate(box_width, 'left');
+
+                box_arr[i].btn.style.top = tp + "px";
+                box_arr[i].btn.style.left = lft + "px";
+            }
+        }
+
+        // Create the boxes and get them jitterbugging
+        function start_madness() {
+            let num_boxes = document.getElementById("box_num").value;
+
+            if(validate_number(num_boxes)) {
+                for (let i = 0; i < num_boxes; i++) {
+                    let tp = get_random_coordinate(box_height, 'top');
+                    let lft = get_random_coordinate(box_width, 'left');
+                    box_arr.push(new Box(tp, lft, get_random_colour()));
+                    document.body.appendChild(box_arr[i].btn);
+                }
+                setInterval(move_all_boxes, 2000);
+            }
+            else {
+                document.getElementById('box_num').style.color = 'red';
+                document.getElementById('box_num').value = 'Invalid input';
+                setTimeout(function(){
+                    document.getElementById('box_num').style.color = 'black';
+                    document.getElementById('box_num').value = 'Try again';}
+                    , 2000);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <p id="input_getter">How many boxes do you want (5 - 100)?<input id="box_num" type="text"></p>
+    <input type="button" id="go_btn" value="Go!">
+
+    <script>
+        //Event handler for Go button
+        document.getElementById("go_btn").onclick = start_madness;
+    </script>
+</body>
+</html>
