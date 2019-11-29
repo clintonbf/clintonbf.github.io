@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sayonara DB</title>
+
+    <!-- init firebase mega thing-->
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+    <!-- init firestore -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+    <!-- init SAQ firebase -->
+    <script src="firebase_config.js"></script>
+    <!-- import DB functions -->
+    <script src="SAQ_db_functions.js"></script>
+</head>
+<body>
+
+    <!-- init firestore -->
+    <script>
+        var the_db = firebase.firestore();
+        // destroy_database(the_db); // This doesn't work. The code that I wrote is vastly different than what's needed, apparently
+        delete_chair_record(the_db, "chair_0");
+
+    </script>
+
+</body>
+</html>

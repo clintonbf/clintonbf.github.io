@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    <link href="css/style.css" rel="stylesheet">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class = "jumbotron jumbotron-fluid" style = "background-color: gray; margin-bottom: 0px;">
+    <div class = "container"><img style = "height: 50px" src="images/home_page/iconchair.png" alt = "chair-icon">
+        <h1 class="display-4" style="color: white;">Site Title </h1></div>
+    <form><div class ="form-group" style="padding: 5px"><input type="email" class="form-control" id="searchbar"
+                                                               aria-describedby="search" placeholder="Search Catalouge">
+    </div></form>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-auth.js"></script>
+
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
+
+<h1 class="lead" style="color: white; padding: 5px">Sign in to Flying Buttresses</h1>
+<div id="firebaseui-auth-container" style = "padding: 10px"></div>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyCcaat9ekOpu0m7qZTJ6gblV65DIBeWEbQ",
+        authDomain: "saq-fb.firebaseapp.com",
+        databaseURL: "https://saq-fb.firebaseio.com",
+        projectId: "saq-fb",
+        storageBucket: "saq-fb.appspot.com",
+        messagingSenderId: "351007329675",
+        appId: "1:351007329675:web:241d7fd4d85e789830b38e"
+    };
+    // Initialize Firebase
+
+firebase.initializeApp(firebaseConfig);
+
+// Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+</script>
+
+<script type = "text/javascript">
+// Initialize the FirebaseUI Widget using Firebase.
+var uiConfig = {
+    // callbacks: {
+    //     signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+    //         // User successfully signed in.
+    //         // Return type determines whether we continue the redirect automatically
+    //         // or whether we leave that to developer to handle.
+    //         return true;
+    //     },
+    //     uiShown: function() {
+    //         // The widget is rendered.
+    //         // Hide the loader.
+    //         document.getElementById('loader');
+    //     }
+    // },
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    // signInFlow: 'popup',
+    signInSuccessUrl: 'main.html',
+    signInOptions: [
+        // Leave the lines as is for the providers you want to offer your users.
+        /*firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        firebase.auth.GithubAuthProvider.PROVIDER_ID,*/
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        //firebase.auth.PhoneAuthProvider.PROVIDER_ID
+    ],
+    // Terms of service url.
+    tosUrl: '<your-tos-url>',
+    // Privacy policy url.
+    privacyPolicyUrl: '<your-privacy-policy-url>'
+};
+
+// The start method will wait until the DOM is loaded.
+ui.start('#firebaseui-auth-container', uiConfig);
+
+
+//     var ui = new firebaseui.auth.AuthUI(firebase.auth(firebase.auth()));
+//     ui.start('#firebaseui-auth-container', {
+//         signInFlow: 'popup',
+//         signInSuccessUrl: 'login.html',
+//         signInOptions: [
+//             firebase.auth.EmailAuthProvider.PROVIDER_ID
+//         ],
+//         tosUrl: '<your-tos-url>',
+//         // Privacy policy url.
+//         privacyPolicyUrl: '<your-privacy-policy-url>'
+//     };
+//
+// // The start method will wait until the DOM is loaded.
+//     ui.start('#firebaseui-auth-container', uiConfig);
+//     })
+
+//
+// // The start method will wait until the DOM is loaded.
+// ui.start('#firebaseui-auth-container', uiConfig);
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            localStorage.setItem("userName", JSON.stringify(user.displayName));
+        }
+    })
+
+</script>
+</div>
+<div class="container" style="padding: 20px; background-color: rgba(0,0,0,0.63); color: lightsteelblue" position="fixed-bottom"> website with chairs on it  </div>
+</body>
+</html>

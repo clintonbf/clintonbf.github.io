@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--suppress JSUnresolvedLibraryURL -->
+<html>
+    <head>
+        <title>Working with SAQ's database</title>
+    </head>
+
+    <body>
+        <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+        
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyCcaat9ekOpu0m7qZTJ6gblV65DIBeWEbQ",
+                authDomain: "saq-fb.firebaseapp.com",
+                databaseURL: "https://saq-fb.firebaseio.com",
+                projectId: "saq-fb",
+                storageBucket: "saq-fb.appspot.com",
+                messagingSenderId: "351007329675",
+                appId: "1:351007329675:web:241d7fd4d85e789830b38e"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            
+            var the_db = firebase.firestore(); // <---------------------------------------------DB DEFINITION HERE
+            
+            console.log("Attempting to add DB record");
+            //Enter DB information (RACHEL)
+            /*the_db.collection("students").doc("Rachel").set({
+                age: 19,
+                hair: "brown",
+                present: true
+              })
+              .then(function(){
+                  console.log("Added record");
+              })
+              .catch(function(error) {
+                  console.log("Something went wrong");
+              });
+    
+            the_db.collection("students").doc("Clint").set({
+                age: 29,
+                hair: "shaved",
+                present: true
+            })
+            .then(function(){
+              console.log("Added record for Clint");
+            })
+            .catch(function(error) {
+                console.log("Error occurred adding Clint");
+            });   /**/
+
+            function add_a_bunch_of_people() {
+                console.log("Adding people!");
+
+                let folks = [
+                    ["Sarah", "Brown", true],
+                    ["Em", "Blond", false],
+                    ["Fahad", "Black", false],
+                    ["Chloe", "Blond", false],
+                    ["Rachel", "Brown", true],
+                    ["Clint", "Shaved", true]];
+                
+                for (let i = 0; i < folks.length; i++) {
+                    console.log("Adding " + folks[i][0]);
+
+                    the_db.collection("students").doc("student" + i).set({
+                        name: folks[i][0],
+                        hair: folks[i][1],
+                        glasses: folks[i][2]
+                    })
+                    .then(function() {
+                        console.log("Added " + folks[i][0]);
+                    })
+                    .catch(function(error) {
+                        console.log("Error adding student");
+                    });                        
+                }                   
+            }
+
+            add_a_bunch_of_people();
+
+            </script>
+
+
+    </body>
+
+</html>
